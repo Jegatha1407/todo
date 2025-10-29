@@ -1,14 +1,19 @@
 <?php
-$servername = "127.0.0.1:3307"; // Default MySQL port is 3306
-$username = "root";             // Default in XAMPP
-$password = "";                 // Default password is empty
-$database = "todo_db";         // Your database name
+$host = "dpg-d413blfgi27c73d4ph20-a";  // Copy this from Render → Hostname
+$port = "5432";                                   // Port shown in Render
+$dbname = "todo_db_0hbl";                         // Copy from Render → Database
+$user = "render";                                 // Copy from Render → Username
+$pass = "EJ8yQdEkgT1OExZ5t4nvjrnscEdkO8jO";                   // Copy from Render → Password
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+  $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;";
+  $pdo = new PDO($dsn, $user, $pass, [
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+  ]);
+  // Connection success
+  echo "✅ Database connected successfully!";
+} catch (PDOException $e) {
+  // If something goes wrong
+  echo "❌ Connection failed: " . $e->getMessage();
 }
 ?>
